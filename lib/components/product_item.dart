@@ -4,8 +4,6 @@ import 'package:shop/models/product.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(
@@ -29,15 +27,14 @@ class ProductItem extends StatelessWidget {
           },
         ),
         footer: GridTileBar(
-          backgroundColor: Colors.black54,
+          backgroundColor: Colors.black87,
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
               onPressed: () {
                 product.toggleFavorite();
               },
               icon: Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              ),
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -47,7 +44,7 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart),
             color: Theme.of(context).colorScheme.secondary,
           ),
         ),
