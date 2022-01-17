@@ -1,5 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/components/badge.dart';
 import 'package:shop/components/product_grid.dart';
+import 'package:shop/models/cart.dart';
 
 enum FilterOptions {
   Favorite,
@@ -7,7 +12,7 @@ enum FilterOptions {
 }
 
 class ProductsOverviewPage extends StatefulWidget {
-  ProductsOverviewPage({Key? key}) : super(key: key);
+  const ProductsOverviewPage({Key? key}) : super(key: key);
 
   @override
   _ProductsOverviewPageState createState() => _ProductsOverviewPageState();
@@ -20,16 +25,15 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Minha Loja'),
-        centerTitle: true,
+        title: const Text('Minha Loja'),
         actions: [
           PopupMenuButton(
             itemBuilder: (_) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Somente Favoritos'),
                 value: FilterOptions.Favorite,
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Todos'),
                 value: FilterOptions.All,
               ),
@@ -43,6 +47,16 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 }
               });
             },
+          ),
+          Consumer<Cart>(
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.shopping_cart),
+            ),
+            builder: (ctx, cart, child) => Badge(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
           ),
         ],
       ),
