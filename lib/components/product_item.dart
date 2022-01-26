@@ -1,5 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
@@ -15,6 +17,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final msg = ScaffoldMessenger.of(context);
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.imageUrl),
@@ -46,23 +49,31 @@ class ProductItem extends StatelessWidget {
                     actions: [
                       TextButton(
                         child: const Text('Não'),
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                        },
+                        onPressed: () => Navigator.of(ctx).pop(),
                       ),
                       TextButton(
                         child: const Text('Sim'),
-                        onPressed: () {
-                          Provider.of<ProductList>(
-                            context,
-                            listen: false,
-                          ).removeProduct(product);
-                          Navigator.of(ctx).pop();
-                        },
+                        onPressed: () => Navigator.of(ctx).pop(),
                       ),
                     ],
                   ),
-                );
+                ).then((value) async {
+                  if (value ?? false) {
+                    try {
+                      await Provider.of<ProductList>(
+                        context,
+                        listen: false,
+                      ).removeProduct(product);
+                    } catch (error) {
+                      print(error.toString());
+                      msg.showSnackBar(
+                        SnackBar(
+                          content: Text(error.toString()),
+                        ),
+                      );
+                    }
+                  }
+                });
               },
             ),
           ],
