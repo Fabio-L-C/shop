@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:convert';
 import 'dart:math';
 
@@ -9,7 +11,8 @@ import 'package:shop/models/product.dart';
 class ProductList with ChangeNotifier {
   final _baseUrl =
       'https://shop-cod3r-2dad9-default-rtdb.firebaseio.com/products';
-  final List<Product> _items = [];
+
+  List<Product> _items = [];
 
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
@@ -116,14 +119,14 @@ class ProductList with ChangeNotifier {
       notifyListeners();
 
       final response = await http.delete(
-        Uri.parse('$_baseUrl/${product.id}'),
+        Uri.parse('$_baseUrl/${product.id}.json'),
       );
 
       if (response.statusCode >= 400) {
         _items.insert(index, product);
         notifyListeners();
-        HttpException(
-          msg: 'Não foi possivel excluir o produto.',
+        throw HttpException(
+          msg: 'Não foi possível excluir o produto.',
           statusCode: response.statusCode,
         );
       }

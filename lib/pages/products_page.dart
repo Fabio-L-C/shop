@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer.dart';
@@ -29,7 +28,7 @@ class ProductsPage extends StatelessWidget {
             icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).pushNamed(
-                AppRoutes.PRODUCTS_FORM,
+                AppRoutes.PRODUCT_FORM,
               );
             },
           ),
@@ -44,7 +43,7 @@ class ProductsPage extends StatelessWidget {
             itemCount: products.itemsCount,
             itemBuilder: (ctx, i) => Column(
               children: [
-                ProductItem(product: products.items[i]),
+                ProductItem(products.items[i]),
                 const Divider(),
               ],
             ),
