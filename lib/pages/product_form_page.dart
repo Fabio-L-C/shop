@@ -88,6 +88,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         context,
         listen: false,
       ).saveProduct(_formDate);
+
       Navigator.of(context).pop();
     } catch (error) {
       await showDialog<void>(
